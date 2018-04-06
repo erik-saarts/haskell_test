@@ -20,5 +20,20 @@ minumap f (a:taila) = f a : minumap f taila
 minufilter :: ( a -> Bool ) -> [a] -> [a]
 minufilter _ [] = []
 minufilter f (a:taila)
-    | f a == True = a: minufilter f taila
+    | f a = a: minufilter f taila
     | otherwise = minufilter f taila
+
+collatz :: (Integral a) => a -> [a]
+collatz 1 = [1]
+collatz n
+    | odd n = n : collatz (n*3+1)
+    | otherwise = n : collatz (n `div` 2)
+
+longerthan15 :: [a] -> Bool
+longerthan15 n
+    | length n > 15 = True
+    | otherwise = False
+
+foldleft :: (Num a) => (a -> a -> a) -> a -> [a] -> a
+foldleft f acc [] = acc
+foldleft f acc (a:taila) = foldleft f (f acc a) taila
